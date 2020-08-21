@@ -14,7 +14,7 @@ class CreateSoilLogsTable extends Migration
     public function up()
     {
         Schema::create('soil_logs', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->datetime('dateCreate');
             $table->float('soilMoisture');
         });

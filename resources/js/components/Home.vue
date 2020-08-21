@@ -1,64 +1,6 @@
 <template>
-  <v-app id="inspire">
-    <v-navigation-drawer
-      v-model="drawer"
-      app
-    >
-      <v-list dense>
-        <v-list-item link :to="{path: '/'}">
-          <v-list-item-action>
-            <v-icon>mdi-home</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Home</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item link :to="{path: '/dht'}">
-          <v-list-item-action>
-            <v-icon>mdi-coolant-temperature</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>DHT Sensor</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item link :to="{path: '/ph'}">
-          <v-list-item-action>
-            <v-icon>mdi-water-percent</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>PH Sensor</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item link :to="{path: '/soil'}">
-          <v-list-item-action>
-            <v-icon>mdi-sprout</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Soil Sensor</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item link>
-          <v-list-item-action>
-            <v-icon>mdi-power</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Logout</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-
-    <v-app-bar
-      app
-      color="green darken-1"
-      dark
-    >
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>Aquaponik IoT</v-toolbar-title>
-    </v-app-bar>
-
-    <v-main>
-      <v-container
+    <v-app id="inspire">
+    <v-container
         class="fill-height"
         fluid
       >
@@ -80,7 +22,7 @@
                   <v-card-text>
                     <div class="headline mb-1">Temperature</div>
                       <div>&nbsp;</div>
-                      <div>Dummy C</div>
+                      <div>{{temperature}} C</div>
                     </v-card-text>
                   </v-card>
               </v-col>
@@ -95,7 +37,7 @@
                   <v-card-text>
                     <div class="headline mb-1">Humidity</div>
                     <div>&nbsp;</div>
-                    <div>Dummy %</div>
+                    <div>{{humidity}} %</div>
                   </v-card-text>
                 </v-card>
               </v-col>
@@ -110,7 +52,7 @@
                   <v-card-text>
                     <div class="headline mb-1">PH</div>
                     <div>&nbsp;</div>
-                    <div>Dummy</div>
+                    <div>{{ph}}</div>
                   </v-card-text>
                 </v-card>
               </v-col>          
@@ -125,7 +67,7 @@
                   <v-card-text>
                     <div class="headline mb-1">Soil Moisture</div>
                     <div>&nbsp;</div>
-                    <div>Dummy %</div>
+                    <div>{{soil}} %</div>
                   </v-card-text>
                 </v-card>
               </v-col>
@@ -160,23 +102,47 @@
           
         </v-row>
       </v-container>
-    </v-main>
-    <v-footer
-      color="green darken-1"
-      app
-    >
-      <span class="white--text">&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
-  </v-app>
+    </v-app>
 </template>
 
 <script>
-  export default {
+export default {
     props: {
       source: String,
     },
     data: () => ({
-      drawer: null,
+      temperature: null,
+      humidity: null,
+      ph: null,
+      soil: null,
     }),
-  }
+
+    methods:{
+        getDHT(){
+          let uri="/api/currentdht";
+          axios.get(uri).then(response => {
+            this.temperature = response.data.temperature;
+            this.humidity = response.data.humidity;
+          })
+        },
+        getPh(){
+          let uri="/api/currentph";
+          axios.get(uri).then(response => {
+            this.ph = response.data.ph;
+          })
+        },
+        getSoil(){
+          let uri="/api/currentsoil";
+          axios.get(uri).then(response => {
+            this.soil = response.data.soilMoisture;
+          })
+        },
+    },
+    
+    created(){
+        this.getDHT();
+        this.getPh();
+        this.getSoil();
+    }
+}
 </script>

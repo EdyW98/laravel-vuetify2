@@ -1,127 +1,86 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer
-      v-model="drawer"
-      app
-    >
-      <v-list dense>
-        <v-list-item link :to="{path: '/'}">
-          <v-list-item-action>
-            <v-icon>mdi-home</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Home</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item link :to="{path: '/dht'}">
-          <v-list-item-action>
-            <v-icon>mdi-coolant-temperature</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>DHT Sensor</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item link :to="{path: '/ph'}">
-          <v-list-item-action>
-            <v-icon>mdi-water-percent</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>PH Sensor</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item link :to="{path: '/soil'}">
-          <v-list-item-action>
-            <v-icon>mdi-sprout</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Soil Sensor</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item link>
-          <v-list-item-action>
-            <v-icon>mdi-power</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title>Logout</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-
-    <v-app-bar
-      app
-      color="green darken-1"
-      dark
-    >
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>Aquaponik IoT</v-toolbar-title>
-    </v-app-bar>
-
-    <v-main>
       <v-container
         class="fill-height"
         fluid
-      >
+      >        
         <v-row>
           <v-col>
-            <v-row
-              align="left"
-              justify="center"
+            <v-dialog
+              v-model="dialog"
+              persistent
+              width="800"
             >
-              <v-col class="text-center" lg="3">
-                <v-card
-                  class="mx-auto"
-                  max-width="350"
-                  outlined
+              <template v-slot:activator="{ on, attrs }">
+                <v-row
+                  align="center"
+                  justify="center"
                 >
-                  <v-row justify="center">
-                    <v-col>
-                      <v-date-picker v-model="picker"></v-date-picker>
-                    </v-col>
-                  </v-row>
-                  <v-row justify="center">
-                    <v-col>
-                      <v-text-field v-model="picker" label="Date range" prepend-icon="mdi-calendar" readonly></v-text-field>
-                    </v-col>
-                  </v-row>
-                  <v-card-actions>
-                    <v-btn text>OK</v-btn>
-                    <v-btn text>Cencel</v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-col>
-              <v-col class="text-center">
-                <v-card
-                  class="mx-auto"
-                  width="fill"
-                  outlined
-                >
-                  <v-data-table
-                    :headers="headers"
-                    :items="dht"
-                    :page.sync="page"
-                    :items-per-page="15"
-                    hide-default-footer
-                    class="elevation-1"
-                    @page-count="pageCount = $event"
-                  ></v-data-table>
-                  <div class="text-center pt-2">
-                    <v-pagination v-model="page" :length="pageCount" :total-visible="7"></v-pagination>
-                  </div>
-                </v-card>
-              </v-col>
-            </v-row>
+                  <v-col class="text-center" lg="3">
+                    <v-card
+                      class="mx-auto"
+                      max-width="350"
+                      outlined
+                    >
+                      <v-row justify="center">
+                        <v-col>
+                          <v-date-picker v-model="picker"></v-date-picker>
+                        </v-col>
+                      </v-row>
+                      <v-row justify="center">
+                        <v-col>
+                          <v-text-field v-model="search" label="Date range" prepend-icon="mdi-calendar" readonly></v-text-field>
+                        </v-col>
+                      </v-row>
+                      <v-card-actions>
+                        <v-btn v-bind="attrs" v-on="on" text @click="openChart" :disabled="!disableButton">Graf</v-btn>
+                        <v-btn text @click="setField">OK</v-btn>
+                        <v-btn text @click="resetField">Cencel</v-btn>
+                      </v-card-actions>
+                    </v-card>
+                  </v-col>
+                  <v-col class="text-center">
+                    <v-card
+                      class="mx-auto"
+                      width="fill"
+                      outlined
+                    >
+                      <v-data-table
+                        :headers="headers"
+                        :items="phsensor"
+                        :page.sync="page"
+                        :items-per-page="15"
+                        :search="search"
+                        hide-default-footer
+                        class="elevation-1"
+                        @page-count="pageCount = $event"
+                      >
+                      </v-data-table>
+                      <div class="text-center pt-2">
+                        <v-pagination v-model="page" :length="pageCount" :total-visible="7"></v-pagination>
+                      </div>
+                    </v-card>
+                  </v-col>
+                </v-row>
+              </template>
+
+              <v-card
+                class="mx-auto"
+                width="fill"
+                outlined
+              >
+                <div align="center">
+                  <apexchart width="750" type="line" :options="options" :series="series"></apexchart>
+                </div>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="blue darken-1" text @click="closeChart">Close</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
           </v-col>
         </v-row>
-        
       </v-container>
-    </v-main>
-    <v-footer
-      color="green darken-1"
-      app
-    >
-      <span class="white--text">&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
   </v-app>
 </template>
 
@@ -131,176 +90,129 @@
       source: String,
     },
     data: () => ({
+      disableButton: false,
+      dialog: false,
       drawer: null,
       page: 1,
       pageCount: 0,
+      search: '',
       picker: new Date().toISOString().substr(0, 10),
-      headers: [
-          { text: 'PH Level', value: 'ph' },
-          { text: 'Tanggal', value: 'dateCreate' },
+      headers: [        
+          { text: 'Tanggal', value: 'dateCreate', sortable: false },
+          { text: 'Ph', value: 'ph', sortable: false },
       ],
-      dht: [
+      phsensor: [],
+      series: [
         {
-          ph: '7.0',
-          dateCreate: '2020-07-08',
+              name: "Ph",
+              data: []
         },
-        {
-          ph: '6.0',
-          dateCreate: '2020-07-08',
+      ],
+      options: {
+        chart: {
+          id: 'vuechart-example',
+          height: 500,          
+          toolbar: {
+            show: false
+          },          
+          zoom: {
+            enabled: false
+          },
         },
-        {
-          ph: '5.0',
-          dateCreate: '2020-07-08',
+        title: {
+          text: 'Graf Per Hari Sensor PH',
+          align: 'Center'
         },
-        {
-          ph: '6.5',
-          dateCreate: '2020-07-08',
-        },
-        {
-          ph: '7.0',
-          dateCreate: '2020-07-08',
-        },
-        {
-          ph: '6.0',
-          dateCreate: '2020-07-08',
-        },
-        {
-          ph: '5.0',
-          dateCreate: '2020-07-08',
-        },
-        {
-          ph: '6.5',
-          dateCreate: '2020-07-08',
-        },
-        {
-          ph: '7.0',
-          dateCreate: '2020-07-08',
-        },
-        {
-          ph: '6.0',
-          dateCreate: '2020-07-08',
-        },
-        {
-          ph: '5.0',
-          dateCreate: '2020-07-08',
-        },
-        {
-          ph: '6.5',
-          dateCreate: '2020-07-08',
-        },
-        {
-          ph: '7.0',
-          dateCreate: '2020-07-08',
-        },
-        {
-          ph: '6.0',
-          dateCreate: '2020-07-08',
-        },
-        {
-          ph: '5.0',
-          dateCreate: '2020-07-08',
-        },
-        {
-          ph: '6.5',
-          dateCreate: '2020-07-08',
-        },
-        {
-          ph: '7.0',
-          dateCreate: '2020-07-08',
-        },
-        {
-          ph: '6.0',
-          dateCreate: '2020-07-08',
-        },
-        {
-          ph: '5.0',
-          dateCreate: '2020-07-08',
-        },
-        {
-          ph: '6.5',
-          dateCreate: '2020-07-08',
-        },
-        {
-          ph: '7.0',
-          dateCreate: '2020-07-08',
-        },
-        {
-          ph: '6.0',
-          dateCreate: '2020-07-08',
-        },
-        {
-          ph: '5.0',
-          dateCreate: '2020-07-08',
-        },
-        {
-          ph: '6.5',
-          dateCreate: '2020-07-08',
-        },
-        {
-          ph: '7.0',
-          dateCreate: '2020-07-08',
-        },
-        {
-          ph: '6.0',
-          dateCreate: '2020-07-08',
-        },
-        {
-          ph: '5.0',
-          dateCreate: '2020-07-08',
-        },
-        {
-          ph: '6.5',
-          dateCreate: '2020-07-08',
-        },
-        {
-          ph: '7.0',
-          dateCreate: '2020-07-08',
-        },
-        {
-          ph: '6.0',
-          dateCreate: '2020-07-08',
-        },
-        {
-          ph: '5.0',
-          dateCreate: '2020-07-08',
-        },
-        {
-          ph: '6.5',
-          dateCreate: '2020-07-08',
-        },
-        {
-          ph: '7.0',
-          dateCreate: '2020-07-08',
-        },
-        {
-          ph: '6.0',
-          dateCreate: '2020-07-08',
-        },
-        {
-          ph: '5.0',
-          dateCreate: '2020-07-08',
-        },
-        {
-          ph: '6.5',
-          dateCreate: '2020-07-08',
-        },
-        {
-          ph: '7.0',
-          dateCreate: '2020-07-08',
-        },
-        {
-          ph: '6.0',
-          dateCreate: '2020-07-08',
-        },
-        {
-          ph: '5.0',
-          dateCreate: '2020-07-08',
-        },
-        {
-          ph: '6.5',
-          dateCreate: '2020-07-08',
-        },
-      ]
+        xaxis: {
+          categories: []
+        }
+      },
+      ph: [],
+      timeRec: [],      
     }),
+
+    methods:{
+        initData(){
+          this.ph = [];
+          this.timeRec = [];
+        },
+
+        getData(){
+          let uri="/api/ph/";
+          axios.get(uri).then(response => {
+            this.phsensor = response.data;
+          })
+        },
+
+        getDataBy(){
+          let uri="/api/ph/" + this.picker;
+          axios.get(uri).then((response) => {
+            this.phsensor = response.data;
+          })
+        },
+
+        getChart(){
+          this.initData();
+          let uri="/api/phchart/" + this.picker;
+          axios.get(uri).then((response) => {
+            console.log(response.data);
+            response.data.ph.forEach(element => {
+              this.ph.push(element.ph);
+            });
+            response.data.time.forEach(element => {
+              this.timeRec.push(element.time);
+            });
+
+            this.series = [
+              {
+                data: this.ph
+              },
+            ];
+            this.options = {
+              xaxis: {
+                categories: this.timeRec
+              }
+            }
+          });
+        },
+
+        initChart(){
+          this.series = [
+            {
+              data: [],
+            },
+          ];
+          this.options = {
+          xaxis: {
+              categories: []
+            }
+          }
+        },
+
+        openChart(){
+          this.getChart();
+          this.dialog = true;
+        },
+        
+        closeChart(){
+          this.initChart();
+          this.dialog = false;
+        },
+
+        setField(){
+          this.search = this.picker;
+          this.getDataBy();
+          this.disableButton = true;
+        },
+
+        resetField(){
+          this.search = null;
+          this.disableButton = false;
+          this.getData();
+        },
+    },
+    created(){
+        this.getData();
+    }
   }
 </script>

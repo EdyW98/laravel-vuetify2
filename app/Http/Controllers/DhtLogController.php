@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\dhtLog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DhtLogController extends Controller
 {
     public function index()
     {
-        //Get
+        //mengambil data secara keseluruhan
         $dht = dhtLog::all();
 
         return response()->json($dht,200);
@@ -17,7 +18,7 @@ class DhtLogController extends Controller
 
     public function store(Request $request)
     {
-        //Post
+        //mengirim data ke database
         $dht = new dhtLog;
         $dht->dateCreate = $request->dateCreate;
         $dht->temperature = $request->temperature;
@@ -34,7 +35,7 @@ class DhtLogController extends Controller
 
     public function show($dateCreate)
     {
-        //Get dht data by date
+        //mengambil data berdasarkan date
         $dht = DB::table("dht_logs")
             ->select("id","dateCreate","temperature","humidity")
             ->where(DB::raw("DATE(dateCreate)"),"$dateCreate")
@@ -48,31 +49,49 @@ class DhtLogController extends Controller
         }
     }
 
-    public function maxTemptVal()
+    public function ChartVal($dateCreate)
     {
-        //getting max temperature for today
-        $dht =  DB::table("dht_logs")
-        ->select("id","dateCreate","temperature")
-        ->where([
-            ["temperature","=",DB::raw("(SELECT MAX(temperature) FROM dht_logs WHERE DATE(dateCreate)=CURRENT_DATE)")],
-            [DB::raw("DATE(dateCreate)"),"=",DB::raw("CURRENT_DATE")]
-        ])
-        ->get();
+        //mengambil data untuk chart      
+        $tempt = DB::table("dht_logs")
+            ->select("temperature")
+            ->where(DB::raw("DATE(dateCreate)"),"$dateCreate")
+            ->get();
+        $humid = DB::table("dht_logs")
+            ->select("humidity")
+            ->where(DB::raw("DATE(dateCreate)"),"$dateCreate")
+            ->get();
+        $time = DB::table("dht_logs")
+            ->selectraw("TIME(dateCreate) as time")
+            ->where(DB::raw("DATE(dateCreate)"),"$dateCreate")
+            ->get();
+        $labels = ['temperture','jumidity','time'];
+        $dht = [
+            'temperature' => $tempt,
+            'humidity' => $humid,
+            'time' => $time
+        ];
+        
 
-        return response()->json($dht,200);
+        if(is_null($dht)){
+            return response()->json('Not Found',404);
+        }
+        else{
+            return response()->json($dht,200);
+        }
     }
 
-    public function maxHumidVal()
+    public function CurrentVal()
     {
-        //getting max humidity for today
+        //mendapatkan nilai saat ini
         $dht = DB::table("dht_logs")
-        ->select("id","dateCreate","humidity")
-        ->where([
-            ["humidity","=",DB::raw("(SELECT MAX(humidity) FROM dht_logs WHERE DATE(dateCreate)=CURRENT_DATE)")],
-            [DB::raw("DATE(dateCreate)"),"=",DB::raw("CURRENT_DATE")]
-        ])
-        ->get();
+        ->select("temperature", "humidity")
+        ->first();
 
-        return response()->json($dht,200);
+        if(is_null($dht)){
+            return response()->json('Not Found',404);
+        }
+        else{
+            return response()->json($dht,200);
+        }
     }
 }

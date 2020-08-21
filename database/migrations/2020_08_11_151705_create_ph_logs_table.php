@@ -14,7 +14,7 @@ class CreatePhLogsTable extends Migration
     public function up()
     {
         Schema::create('ph_logs', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->datetime('dateCreate');
             $table->float('ph');
         });

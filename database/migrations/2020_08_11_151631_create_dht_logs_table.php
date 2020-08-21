@@ -14,12 +14,10 @@ class CreateDhtLogsTable extends Migration
     public function up()
     {
         Schema::create('dht_logs', function (Blueprint $table) {
-            Schema::create('dht_logs', function (Blueprint $table) {
-                $table->id();
-                $table->datetime("dateCreate");
-                $table->float("temperature");
-                $table->float("humidity");
-            });
+            $table->bigIncrements('id');
+            $table->datetime('dateCreate');
+            $table->float('temperature');
+            $table->float('humidity');
         });
     }
 

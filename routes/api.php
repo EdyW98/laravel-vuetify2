@@ -20,16 +20,20 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 //api dht
 Route::get('/dht','DhtLogController@index');
 Route::get('/dht/{dateCreate}','DhtLogController@show');
-Route::get('/dhtmaxtempt','DhtLogController@maxTemptVal');
-Route::get('/dhtmaxhumid','DhtLogController@maxHumidVal');
+Route::get('/dhtchart/{dateCreate}','DhtLogController@ChartVal');
+Route::get('/currentdht','DhtLogController@CurrentVal');
 Route::post('/dht','DhtLogController@store');
 
 //api ph
 Route::get('/ph','PhLogController@index');
 Route::get('/ph/{dateCreate}','PhLogController@show');
+Route::get('/phchart/{dateCreate}','PhLogController@ChartVal');
+Route::get('/currentph','PhLogController@CurrentVal');
 Route::post('/ph','PhLogController@store');
 
 //api soil moisture
 Route::get('/soil','SoilLogController@index');
 Route::get('/soil/{dateCreate}','SoilLogController@show');
+Route::get('/soilchart/{dateCreate}','SoilLogController@ChartVal');
+Route::get('/currentsoil','SoilLogController@CurrentVal');
 Route::post('/soil','SoilLogController@store');

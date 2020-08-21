@@ -15,7 +15,19 @@ class CreateDailyLogsTable extends Migration
     {
         Schema::create('daily_logs', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamps();
+            $table->float('AvgTemperature');
+            $table->float('AvgHumidity');
+            $table->float('AvgPh');
+            $table->float('AvgSoil');
+            $table->float('MaxTemperature');
+            $table->float('MaxHumidity');
+            $table->float('MaxPh');
+            $table->float('MaxSoil');
+            $table->float('MinTemperature');
+            $table->float('MinHumidity');
+            $table->float('MinPh');
+            $table->float('MinSoil');
+            $table->date('created_at');
         });
     }
 

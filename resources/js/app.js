@@ -4,11 +4,14 @@ import Vuetify from 'vuetify';
 import router from './router';
 import axios from 'axios';
 import AppRoot from './components/AppRoot.vue'
+import VueApexCharts from 'vue-apexcharts'
 
 window.EventBus  = new Vue();
 window.axios  = axios.create();
 
-Vue.use(Vuetify)
+Vue.component('apexchart', VueApexCharts)
+
+Vue.use(Vuetify, VueApexCharts)
 
 const app = new Vue({
     el: '#app',
