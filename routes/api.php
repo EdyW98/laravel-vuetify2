@@ -37,3 +37,10 @@ Route::get('/soil/{dateCreate}','SoilLogController@show');
 Route::get('/soilchart/{dateCreate}','SoilLogController@ChartVal');
 Route::get('/currentsoil','SoilLogController@CurrentVal');
 Route::post('/soil','SoilLogController@store');
+
+//api daily logs
+Route::get('/daily','DailyLogController@index');
+Route::get('/maxdhtpast','DailyLogController@MaxDhtLastTime');
+Route::get('/mindhtpast','DailyLogController@MInDhtLastTime');
+Route::get('/iterationval','DailyLogController@IterationVal');
+Route::get('/weightval','DailyLogController@WeightVal');

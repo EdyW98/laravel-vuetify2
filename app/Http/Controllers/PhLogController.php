@@ -10,7 +10,7 @@ class PhLogController extends Controller
 {
     public function index()
     {
-        //mengambil keseluruhan data
+        //Get
         $ph = phLog::all();
 
         return response()->json($ph,200);
@@ -18,7 +18,7 @@ class PhLogController extends Controller
 
     public function store(Request $request)
     {
-        //mengirimkan data ke database
+        //Post
         $ph = new phLog;
         $ph->dateCreate = $request->dateCreate;
         $ph->ph = $request->ph;
@@ -34,7 +34,7 @@ class PhLogController extends Controller
 
     public function show($dateCreate)
     {
-        //mengambil data berdasarkan date
+        //Get By Date
         $ph = DB::table("ph_logs")
             ->select("id","dateCreate","ph")
             ->where(DB::raw("DATE(dateCreate)"),"$dateCreate")
@@ -50,7 +50,7 @@ class PhLogController extends Controller
 
     public function ChartVal($dateCreate)
     {
-        //mengambil data untuk pembuatan chart        
+        //getting max temperature for today        
         $val = DB::table("ph_logs")
             ->select("ph")
             ->where(DB::raw("DATE(dateCreate)"),"$dateCreate")
@@ -76,9 +76,10 @@ class PhLogController extends Controller
 
     public function CurrentVal()
     {
-        //mengambil data yang terbaru
+        //getting max humidity for today
         $ph = DB::table("ph_logs")
         ->select("ph")
+        ->orderBy('id','desc')
         ->first();
 
         if(is_null($ph)){

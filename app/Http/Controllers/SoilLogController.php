@@ -10,7 +10,7 @@ class SoilLogController extends Controller
 {
     public function index()
     {
-        //mengambil keseluruhan data
+        //Get
         $soil = soilLog::all();
 
         return response()->json($soil,200);
@@ -18,7 +18,7 @@ class SoilLogController extends Controller
 
     public function store(Request $request)
     {
-        //mengirimkan data ke database
+        //Post
         $soil = new soilLog;
         $soil->dateCreate = $request->dateCreate;
         $soil->soilMoisture = $request->soilMoisture;
@@ -35,7 +35,7 @@ class SoilLogController extends Controller
 
     public function show($dateCreate)
     {
-        //mengambild data berdasarkan date
+        //Get By Date
         $soil = DB::table("soil_logs")
             ->select("id","dateCreate","soilMoisture")
             ->where(DB::raw("DATE(dateCreate)"),"$dateCreate")
@@ -51,7 +51,7 @@ class SoilLogController extends Controller
 
     public function ChartVal($dateCreate)
     {
-        //megambil data untuk pembuatan chart     
+        //getting max temperature for today        
         $val = DB::table("soil_logs")
             ->select("soilMoisture")
             ->where(DB::raw("DATE(dateCreate)"),"$dateCreate")
@@ -77,9 +77,10 @@ class SoilLogController extends Controller
 
     public function CurrentVal()
     {
-        //mengambil satu data terbaru
+        //getting max humidity for today
         $soil = DB::table("soil_logs")
         ->select("soilMoisture")
+        ->orderBy('id','desc')
         ->first();
 
         if(is_null($soil)){

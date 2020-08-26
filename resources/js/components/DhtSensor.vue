@@ -1,7 +1,6 @@
 <template>
   <v-app id="inspire">
       <v-container
-        class="fill-height"
         fluid
       >        
         <v-row>
@@ -13,7 +12,7 @@
             >
               <template v-slot:activator="{ on, attrs }">
                 <v-row
-                  align="center"
+                  align="start"
                   justify="center"
                 >
                   <v-col class="text-center" lg="3">
@@ -70,7 +69,7 @@
                 outlined
               >
                 <div align="center">
-                  <apexchart width="750" type="line" :options="options" :series="series"></apexchart>
+                  <apexchart type="line" :options="options" :series="series"></apexchart>
                 </div>
                 <v-card-actions>
                     <v-spacer></v-spacer>
@@ -92,7 +91,6 @@
     data: () => ({
       disableButton: false,
       dialog: false,
-      drawer: null,
       page: 1,
       pageCount: 0,
       search: '',
@@ -165,7 +163,6 @@
           this.initData();
           let uri="/api/dhtchart/" + this.picker;
           axios.get(uri).then((response) => {
-            console.log(response.data);
             response.data.temperature.forEach(element => {
               this.temperature.push(element.temperature);
             });

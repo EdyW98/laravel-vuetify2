@@ -1,7 +1,6 @@
 <template>
   <v-app id="inspire">
       <v-container
-        class="fill-height"
         fluid
       >        
         <v-row>
@@ -13,7 +12,7 @@
             >
               <template v-slot:activator="{ on, attrs }">
                 <v-row
-                  align="center"
+                  align="start"
                   justify="center"
                 >
                   <v-col class="text-center" lg="3">
@@ -155,7 +154,6 @@
           this.initData();
           let uri="/api/soilchart/" + this.picker;
           axios.get(uri).then((response) => {
-            console.log(response.data);
             response.data.soil.forEach(element => {
               this.soil.push(element.soilMoisture);
             });

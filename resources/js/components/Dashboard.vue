@@ -37,6 +37,14 @@
             <v-list-item-title>Soil Sensor</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item link :to="{path: '/dailylog'}">
+          <v-list-item-action>
+            <v-icon>mdi-book-open-page-variant</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Log Harian</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
         <v-list-item link @click="Logout">
           <v-list-item-action>
             <v-icon>mdi-power</v-icon>
@@ -79,13 +87,8 @@
     }),
 
     methods: {
-      // getID(){
-      //     localStorage.getItem('userid');
-      // },
-
       isLogin(){
           var session = localStorage.getItem('userid');
-          console.log(session);
           if(session == null){
               this.$router.replace({path: "/login"});
           }

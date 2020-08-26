@@ -10,7 +10,7 @@ class DhtLogController extends Controller
 {
     public function index()
     {
-        //mengambil data secara keseluruhan
+        //Get
         $dht = dhtLog::all();
 
         return response()->json($dht,200);
@@ -18,7 +18,7 @@ class DhtLogController extends Controller
 
     public function store(Request $request)
     {
-        //mengirim data ke database
+        //Post
         $dht = new dhtLog;
         $dht->dateCreate = $request->dateCreate;
         $dht->temperature = $request->temperature;
@@ -35,7 +35,7 @@ class DhtLogController extends Controller
 
     public function show($dateCreate)
     {
-        //mengambil data berdasarkan date
+        //Get dht data by date
         $dht = DB::table("dht_logs")
             ->select("id","dateCreate","temperature","humidity")
             ->where(DB::raw("DATE(dateCreate)"),"$dateCreate")
@@ -51,7 +51,7 @@ class DhtLogController extends Controller
 
     public function ChartVal($dateCreate)
     {
-        //mengambil data untuk chart      
+        //getting max temperature for today        
         $tempt = DB::table("dht_logs")
             ->select("temperature")
             ->where(DB::raw("DATE(dateCreate)"),"$dateCreate")
@@ -82,9 +82,10 @@ class DhtLogController extends Controller
 
     public function CurrentVal()
     {
-        //mendapatkan nilai saat ini
+        //getting max humidity for today
         $dht = DB::table("dht_logs")
         ->select("temperature", "humidity")
+        ->orderBy('id','desc')
         ->first();
 
         if(is_null($dht)){

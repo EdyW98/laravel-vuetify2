@@ -1,7 +1,6 @@
 <template>
   <v-app id="inspire">
       <v-container
-        class="fill-height"
         fluid
       >        
         <v-row>
@@ -13,7 +12,7 @@
             >
               <template v-slot:activator="{ on, attrs }">
                 <v-row
-                  align="center"
+                  align="start"
                   justify="center"
                 >
                   <v-col class="text-center" lg="3">
@@ -92,7 +91,6 @@
     data: () => ({
       disableButton: false,
       dialog: false,
-      drawer: null,
       page: 1,
       pageCount: 0,
       search: '',
@@ -155,7 +153,6 @@
           this.initData();
           let uri="/api/phchart/" + this.picker;
           axios.get(uri).then((response) => {
-            console.log(response.data);
             response.data.ph.forEach(element => {
               this.ph.push(element.ph);
             });
