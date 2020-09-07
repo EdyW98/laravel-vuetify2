@@ -2628,6 +2628,49 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     'PesanPertama': function PesanPertama() {
@@ -2741,6 +2784,7 @@ __webpack_require__.r(__webpack_exports__);
                 }
 
                 ;
+                console.log(saw);
 
                 if (saw >= 0.95) {
                   _this5.link = 1;
@@ -2756,6 +2800,20 @@ __webpack_require__.r(__webpack_exports__);
               return _context2.stop();
           }
         }
+      });
+    },
+    onButton: function onButton() {
+      axios.put('api/updatesettings/1', {
+        values: 1
+      }).then(function (response) {
+        console.log(response);
+      });
+    },
+    offButton: function offButton() {
+      axios.put('api/updatesettings/1', {
+        values: 0
+      }).then(function (response) {
+        console.log(response);
       });
     }
   },
@@ -5237,6 +5295,10 @@ var render = function() {
                                                 "v-col",
                                                 [
                                                   _c("v-date-picker", {
+                                                    attrs: {
+                                                      "no-title": "",
+                                                      scrollable: ""
+                                                    },
                                                     model: {
                                                       value: _vm.picker,
                                                       callback: function($$v) {
@@ -5650,7 +5712,96 @@ var render = function() {
           _c(
             "v-row",
             { attrs: { align: "center", justify: "center" } },
-            [_c("v-col")],
+            [
+              _c(
+                "v-col",
+                [
+                  _c(
+                    "v-card",
+                    {
+                      staticClass: "mx-auto",
+                      attrs: {
+                        "max-width": "800",
+                        outlined: "",
+                        align: "center"
+                      }
+                    },
+                    [
+                      _c(
+                        "v-list-item-title",
+                        { staticClass: "headline mb-1" },
+                        [_vm._v("Sakelar Pompa Air")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "v-row",
+                        { attrs: { justify: "center" } },
+                        [
+                          _c(
+                            "v-card",
+                            {
+                              staticClass: "my-3 mx-6 pa-1",
+                              attrs: { outlined: "", tile: "" }
+                            },
+                            [
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: {
+                                    "max-height": "200",
+                                    "min-height": "120",
+                                    "max-width": "200",
+                                    "min-width": "120",
+                                    tile: "",
+                                    color: "primary"
+                                  },
+                                  on: { click: _vm.onButton }
+                                },
+                                [_vm._v("\n                On\n              ")]
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-card",
+                            {
+                              staticClass: "my-3 mx-6 pa-1",
+                              attrs: { outlined: "", tile: "" }
+                            },
+                            [
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: {
+                                    "max-height": "200",
+                                    "min-height": "120",
+                                    "max-width": "200",
+                                    "min-width": "120",
+                                    tile: "",
+                                    color: "error"
+                                  },
+                                  on: { click: _vm.offButton }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                Off\n              "
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
             1
           ),
           _vm._v(" "),
@@ -5976,6 +6127,10 @@ var render = function() {
                                                 "v-col",
                                                 [
                                                   _c("v-date-picker", {
+                                                    attrs: {
+                                                      "no-title": "",
+                                                      scrollable: ""
+                                                    },
                                                     model: {
                                                       value: _vm.picker,
                                                       callback: function($$v) {
@@ -6282,6 +6437,10 @@ var render = function() {
                                                 "v-col",
                                                 [
                                                   _c("v-date-picker", {
+                                                    attrs: {
+                                                      "no-title": "",
+                                                      scrollable: ""
+                                                    },
                                                     model: {
                                                       value: _vm.picker,
                                                       callback: function($$v) {

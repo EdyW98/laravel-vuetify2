@@ -44,3 +44,7 @@ Route::get('/maxdhtpast','DailyLogController@MaxDhtLastTime');
 Route::get('/mindhtpast','DailyLogController@MInDhtLastTime');
 Route::get('/iterationval','DailyLogController@IterationVal');
 Route::get('/weightval','DailyLogController@WeightVal');
+
+//etc
+Route::get('/settingname/{name}','SettingsController@show');
+Route::put('/updatesettings/{name}','SettingsController@update');

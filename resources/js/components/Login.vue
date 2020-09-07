@@ -48,6 +48,15 @@
                 <v-btn color="primary" @click="Login">Login</v-btn>
               </v-card-actions>
             </v-card>
+            <v-alert
+              v-model="alert"
+              dismissible
+              text
+              prominent
+              type="error"
+            >
+            Username atau password salah
+            </v-alert>
           </v-col>
         </v-row>
       </v-container>
@@ -58,6 +67,7 @@
 <script>
 export default {
     data: () => ({
+      alert: false,
       userID: null,
       username: null,
       password: null,
@@ -75,6 +85,9 @@ export default {
         if(this.username == "admin" && this.password == "admin"){
           localStorage.setItem('userid', 1);
           this.$router.replace({path: "/"});
+        }
+        else{
+          this.alert = true;
         }
       },
     },
