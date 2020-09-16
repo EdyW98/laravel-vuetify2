@@ -37,16 +37,11 @@ class DhtLogController extends Controller
     {
         //Get dht data by date
         $dht = DB::table("dht_logs")
-            ->select("id","dateCreate","temperature","humidity")
+            ->select("*")
             ->where(DB::raw("DATE(dateCreate)"),"$dateCreate")
             ->get();
 
-        if(is_null($dht)){
-            return response()->json('Not Found',404);
-        }
-        else{
-            return response()->json($dht,200);
-        }
+        return response()->json($dht,200);
     }
 
     public function ChartVal($dateCreate)
@@ -64,7 +59,6 @@ class DhtLogController extends Controller
             ->selectraw("TIME(dateCreate) as time")
             ->where(DB::raw("DATE(dateCreate)"),"$dateCreate")
             ->get();
-        $labels = ['temperture','jumidity','time'];
         $dht = [
             'temperature' => $tempt,
             'humidity' => $humid,
@@ -72,15 +66,10 @@ class DhtLogController extends Controller
         ];
         
 
-        if(is_null($dht)){
-            return response()->json('Not Found',404);
-        }
-        else{
-            return response()->json($dht,200);
-        }
+        return response()->json($dht,200);
     }
 
-    public function CurrentVal()
+    public function CurrenDhttVal()
     {
         //getting max humidity for today
         $dht = DB::table("dht_logs")
@@ -88,11 +77,6 @@ class DhtLogController extends Controller
         ->orderBy('id','desc')
         ->first();
 
-        if(is_null($dht)){
-            return response()->json('Not Found',404);
-        }
-        else{
-            return response()->json($dht,200);
-        }
+        return response()->json($dht,200);
     }
 }

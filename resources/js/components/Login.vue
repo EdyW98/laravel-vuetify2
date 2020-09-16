@@ -27,7 +27,7 @@
                 <v-form>
                   <v-text-field
                     v-model="username"
-                    label="Login"
+                    label="username"
                     name="login"
                     prepend-icon="mdi-account"
                     type="text"
@@ -75,7 +75,7 @@ export default {
 
     methods: {
       isLogin(){        
-        var session = localStorage.getItem('userid');
+        var session = localStorage.getItem('activeuser');
           if(session>0){
               this.$router.replace({path: "/"});
           }
@@ -83,7 +83,7 @@ export default {
 
       Login(){
         if(this.username == "admin" && this.password == "admin"){
-          localStorage.setItem('userid', 1);
+          localStorage.setItem('activeuser', 1);
           this.$router.replace({path: "/"});
         }
         else{

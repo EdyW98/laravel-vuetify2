@@ -197,7 +197,7 @@ export default {
       humidity: null,
       ph: null,
       soil: null,
-      kriteria1: [0.2,0.1,0.2,0.5], //merupakan kriteria untuk menampilkan pesan keperluan melakukan pengairan air ke tanaman [tpemt,humid,ph,soil]
+      bobotC1: [0.2,0.1,0.2,0.5], //merupakan kriteria untuk menampilkan pesan keperluan melakukan pengairan air ke tanaman [tpemt,humid,ph,soil]
       iterasi: [],
     }),
 
@@ -226,41 +226,40 @@ export default {
 
       async getDataIterasi(){
         let uri="/api/iterationval";
-        axios.get(uri).then(response => {
+        await axios.get(uri).then(response => {
           this.iterasi =  response.data;
         })
       },
 
       async kalkulasiNilai(){
-        var bobot = [];
+        var kriteria = [];
         var normalisasi = [];
         var saw = 0;
 
-
-        let uri="/api/weightval";
-        axios.get(uri).then(response => {
+        let uri="/api/criteriatval";
+        await axios.get(uri).then(response => {
           //temperature Max val
-          bobot.push(response.data.MaxTemperature);
+          kriteria.push(response.data.MaxTemperature);
           //humidity Min Val
-          bobot.push(response.data.MinHumidity);
+          kriteria.push(response.data.MinHumidity);
           //ph Max Val
-          bobot.push(response.data.MaxPh);
+          kriteria.push(response.data.MaxPh);
           //soil Min Val
-          bobot.push(response.data.MinSoil);
+          kriteria.push(response.data.MinSoil);
           
           // Temperature Rumus Max (X/W)
-          normalisasi.push(this.iterasi.AvgTemperature / bobot[0]);
+          normalisasi.push(this.iterasi.AvgTemperature / kriteria[0]);
           // Humidity Rumus Min (W/X)
-          normalisasi.push(bobot[1] / this.iterasi.AvgHumidity);
+          normalisasi.push(kriteria[1] / this.iterasi.AvgHumidity);
           // // Ph Rumus Max (X/W)
-          normalisasi.push(this.iterasi.AvgPh / bobot[2]);
+          normalisasi.push(this.iterasi.AvgPh / kriteria[2]);
           // // Soil Rumus Min (W/X)
-          normalisasi.push(bobot[3] / this.iterasi.AvgSoil);
+          normalisasi.push(kriteria[3] / this.iterasi.AvgSoil);
           console.log(normalisasi);
 
           //perhitungan normalisasi
           for(var i=0;i<normalisasi.length;i++){
-            saw = saw + normalisasi[i] * this.kriteria1[i];
+            saw = saw + normalisasi[i] * this.bobotC1[i];
           };
           console.log(saw);
 
@@ -275,7 +274,7 @@ export default {
 
       onButton(){
         axios.put('api/updatesettings/1',{
-          values:1
+          settingsValue:1
         })
         .then(response => {
           console.log(response);
@@ -284,7 +283,7 @@ export default {
 
       offButton(){
         axios.put('api/updatesettings/1',{
-          values:0
+          settingsValue:0
         })
         .then(response => {
           console.log(response);
@@ -292,12 +291,12 @@ export default {
       }
     },
     
-    created(){
+    async created(){
         this.getDHT();
         this.getPh();
         this.getSoil();
-        this.getDataIterasi();
-        this.kalkulasiNilai();
+        await this.getDataIterasi();
+        await this.kalkulasiNilai();
     }
 }
 </script>

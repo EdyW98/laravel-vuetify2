@@ -37,16 +37,11 @@ class SoilLogController extends Controller
     {
         //Get By Date
         $soil = DB::table("soil_logs")
-            ->select("id","dateCreate","soilMoisture")
+            ->select("*")
             ->where(DB::raw("DATE(dateCreate)"),"$dateCreate")
             ->get();
 
-        if(is_null($soil)){
-            return response()->json('Not Found',404);
-        }
-        else{
-            return response()->json($soil,200);
-        }
+        return response()->json($soil,200);
     }
 
     public function ChartVal($dateCreate)
@@ -60,22 +55,15 @@ class SoilLogController extends Controller
             ->selectraw("TIME(dateCreate) as time")
             ->where(DB::raw("DATE(dateCreate)"),"$dateCreate")
             ->get();
-        $labels = ['ph','time'];
         $soil = [
             'soil' => $val,
             'time' => $time
         ];
         
-
-        if(is_null($soil)){
-            return response()->json('Not Found',404);
-        }
-        else{
-            return response()->json($soil,200);
-        }
+        return response()->json($soil,200);
     }
 
-    public function CurrentVal()
+    public function CurrentSoilVal()
     {
         //getting max humidity for today
         $soil = DB::table("soil_logs")
@@ -83,11 +71,6 @@ class SoilLogController extends Controller
         ->orderBy('id','desc')
         ->first();
 
-        if(is_null($soil)){
-            return response()->json('Not Found',404);
-        }
-        else{
-            return response()->json($soil,200);
-        }
+        return response()->json($soil,200);
     }
 }

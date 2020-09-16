@@ -65,6 +65,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     source: String
@@ -74,6 +98,8 @@ __webpack_require__.r(__webpack_exports__);
       page: 1,
       pageCount: 0,
       search: '',
+      date: new Date().toISOString().substr(0, 10),
+      menu: false,
       //Tabel Kelembapan Udara
       headers: [{
         text: 'Rata Rata',
@@ -87,10 +113,14 @@ __webpack_require__.r(__webpack_exports__);
         text: 'Terendah',
         value: 'MinHumidity',
         sortable: false
+      }, {
+        text: 'Tanggal',
+        value: 'created_at',
+        sortable: false
       }],
       data: [],
       //Chart Kelembapan Udara
-      seriesTempt: [{
+      seriesHumidity: [{
         name: "Rata-Rata Kelembapan Udara",
         data: []
       }, {
@@ -100,7 +130,7 @@ __webpack_require__.r(__webpack_exports__);
         name: "Kelembapan Udara Terendah",
         data: []
       }],
-      optionsTempt: {
+      optionsHumidity: {
         chart: {
           id: 'vuechart-example',
           toolbar: {
@@ -149,19 +179,27 @@ __webpack_require__.r(__webpack_exports__);
         response.data.forEach(function (element) {
           data3.push(element.MinHumidity);
         });
-        _this2.seriesTempt = [{
+        _this2.seriesHumidity = [{
           data: data1
         }, {
           data: data2
         }, {
           data: data3
         }];
-        _this2.optionsTempt = {
+        _this2.optionsHumidity = {
           xaxis: {
             categories: cat
           }
         };
       });
+    },
+    setSearchTable: function setSearchTable() {
+      this.search = this.date;
+      this.menu = false;
+    },
+    resetSearchTable: function resetSearchTable() {
+      this.search = '';
+      this.menu = false;
     }
   },
   created: function created() {
@@ -218,14 +256,14 @@ var render = function() {
                       }
                     },
                     [
-                      _c("v-card-title", [_vm._v("Graf Kelembapan Udara")]),
+                      _c("v-card-title", [_vm._v("Graf Temperatur")]),
                       _vm._v(" "),
                       _c("apexchart", {
                         attrs: {
                           height: "100%",
                           type: "line",
-                          options: _vm.optionsTempt,
-                          series: _vm.seriesTempt
+                          options: _vm.optionsHumidity,
+                          series: _vm.seriesHumidity
                         }
                       })
                     ],
@@ -249,13 +287,108 @@ var render = function() {
                 { staticClass: "text-center" },
                 [
                   _c(
+                    "v-menu",
+                    {
+                      ref: "menu",
+                      attrs: {
+                        "close-on-content-click": false,
+                        transition: "scale-transition",
+                        "offset-y": "",
+                        "min-width": "290px"
+                      },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "activator",
+                          fn: function(ref) {
+                            var on = ref.on
+                            var attrs = ref.attrs
+                            return [
+                              _c(
+                                "v-text-field",
+                                _vm._g(
+                                  _vm._b(
+                                    {
+                                      attrs: {
+                                        label: "Cari",
+                                        "prepend-icon": "mdi-calendar",
+                                        readonly: ""
+                                      },
+                                      model: {
+                                        value: _vm.search,
+                                        callback: function($$v) {
+                                          _vm.search = $$v
+                                        },
+                                        expression: "search"
+                                      }
+                                    },
+                                    "v-text-field",
+                                    attrs,
+                                    false
+                                  ),
+                                  on
+                                )
+                              )
+                            ]
+                          }
+                        }
+                      ]),
+                      model: {
+                        value: _vm.menu,
+                        callback: function($$v) {
+                          _vm.menu = $$v
+                        },
+                        expression: "menu"
+                      }
+                    },
+                    [
+                      _vm._v(" "),
+                      _c(
+                        "v-date-picker",
+                        {
+                          attrs: { "no-title": "", scrollable: "" },
+                          model: {
+                            value: _vm.date,
+                            callback: function($$v) {
+                              _vm.date = $$v
+                            },
+                            expression: "date"
+                          }
+                        },
+                        [
+                          _c("v-spacer"),
+                          _vm._v(" "),
+                          _c(
+                            "v-btn",
+                            {
+                              attrs: { text: "", color: "primary" },
+                              on: { click: _vm.resetSearchTable }
+                            },
+                            [_vm._v("Reset")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-btn",
+                            {
+                              attrs: { text: "", color: "primary" },
+                              on: { click: _vm.setSearchTable }
+                            },
+                            [_vm._v("Set")]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
                     "v-card",
                     {
                       staticClass: "px-auto mx-auto",
                       attrs: { width: "fill", outlined: "" }
                     },
                     [
-                      _c("v-card-title", [_vm._v("Tabel Kelembapan Udara")]),
+                      _c("v-card-title", [_vm._v("Tabel Temperature")]),
                       _vm._v(" "),
                       _c("v-data-table", {
                         staticClass: "elevation-1",

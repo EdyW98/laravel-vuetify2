@@ -136,7 +136,7 @@
     }),
 
     methods:{
-      getDataTest2(){
+      getDataTemperature(){
         let uri="/api/daily/";
         axios.get(uri).then(response => {
           console.log(response.data);
@@ -144,7 +144,7 @@
         })
       },
 
-      getDataTest(){
+      getDataChartTemperature(){
         var data1 = [];
         var data2 = [];
         var data3 = [];
@@ -195,8 +195,8 @@
     },
 
     created(){
-        this.getDataTest();
-        this.getDataTest2();
+        this.getDataTemperature();
+        this.getDataChartTemperature();
     }
   }
 </script>

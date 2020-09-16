@@ -88,14 +88,14 @@
 
     methods: {
       isLogin(){
-          var session = localStorage.getItem('userid');
+          var session = localStorage.getItem('activeuser');
           if(session == null){
               this.$router.replace({path: "/login"});
           }
       },
 
       Logout(){
-       localStorage.removeItem('userid');
+       localStorage.removeItem('activeuser');
        this.$router.replace({path: "/login"});
       },
     },

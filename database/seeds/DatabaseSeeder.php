@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
     {
         DB::table('settings')->insert([
             'settingsName' => "pinout",
-            'values' => "0",
+            'settingsValue' => "0",
         ]);
     }
 }

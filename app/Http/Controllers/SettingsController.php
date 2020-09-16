@@ -10,10 +10,10 @@ class SettingsController extends Controller
 {
     public function update(Request $request, $id)
     {
-        $values = $request->values;
+        $settingsValue = $request->settingsValue;
 
         $State = Settings::find($id);
-        $State->values = $values;
+        $State->settingsValue = $settingsValue;
         $success = $State->save();
 
         if(!$success){

@@ -61,11 +61,11 @@
 
 <script>
    export default {
-     components:{
-        'TemperatureMenu': () => import('./DailyLogMenu/Temperature'),
-        'HumidityMenu': () => import('./DailyLogMenu/Humidity'),
-        'PhMenu': () => import('./DailyLogMenu/Ph'),
-        'SoilMenu': () => import('./DailyLogMenu/Soil'),
+    components:{
+      'TemperatureMenu': () => import('./DailyLogMenu/Temperature'),
+      'HumidityMenu': () => import('./DailyLogMenu/Humidity'),
+      'PhMenu': () => import('./DailyLogMenu/Ph'),
+      'SoilMenu': () => import('./DailyLogMenu/Soil'),
     },
 
     props: {

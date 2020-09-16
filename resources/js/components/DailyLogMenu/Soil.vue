@@ -136,7 +136,7 @@
     }),
 
     methods:{
-      getDataTest2(){
+      getDataSoil(){
         let uri="/api/daily/";
         axios.get(uri).then(response => {
           console.log(response.data);
@@ -144,7 +144,7 @@
         })
       },
 
-      getDataTest(){
+      getDataChartSoil(){
         var data1 = [];
         var data2 = [];
         var data3 = [];
@@ -194,8 +194,8 @@
     },
 
     created(){
-        this.getDataTest();
-        this.getDataTest2();
+        this.getDataSoil();
+        this.getDataChartSoil();
     }
   }
 </script>

@@ -58,7 +58,7 @@ class DailyLogController extends Controller
         return response()->json($Max,200);
     }
 
-    public function WeightVal()
+    public function CriteriaVal()
     {
         //getting the value used for weight       
         $Min = DB::table("daily_logs")

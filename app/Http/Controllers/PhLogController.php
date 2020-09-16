@@ -36,16 +36,11 @@ class PhLogController extends Controller
     {
         //Get By Date
         $ph = DB::table("ph_logs")
-            ->select("id","dateCreate","ph")
+            ->select("*")
             ->where(DB::raw("DATE(dateCreate)"),"$dateCreate")
             ->get();
 
-        if(is_null($ph)){
-            return response()->json('Not Found',404);
-        }
-        else{
-            return response()->json($ph,200);
-        }
+        return response()->json($ph,200);
     }
 
     public function ChartVal($dateCreate)
@@ -59,22 +54,15 @@ class PhLogController extends Controller
             ->selectraw("TIME(dateCreate) as time")
             ->where(DB::raw("DATE(dateCreate)"),"$dateCreate")
             ->get();
-        $labels = ['ph','time'];
         $ph = [
             'ph' => $val,
             'time' => $time
         ];
         
-
-        if(is_null($ph)){
-            return response()->json('Not Found',404);
-        }
-        else{
-            return response()->json($ph,200);
-        }
+        return response()->json($ph,200);
     }
 
-    public function CurrentVal()
+    public function CurrentPhVal()
     {
         //getting max humidity for today
         $ph = DB::table("ph_logs")
@@ -82,11 +70,6 @@ class PhLogController extends Controller
         ->orderBy('id','desc')
         ->first();
 
-        if(is_null($ph)){
-            return response()->json('Not Found',404);
-        }
-        else{
-            return response()->json($ph,200);
-        }
+        return response()->json($ph,200);
     }
 }
