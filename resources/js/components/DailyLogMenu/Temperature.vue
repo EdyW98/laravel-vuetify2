@@ -56,7 +56,7 @@
             width="fill"
             outlined
           >
-            <v-card-title>Tabel Temperature</v-card-title>
+            <v-card-title>Tabel Temperatur Udara</v-card-title>
             <v-data-table
               :headers="headers"
               :items="data"

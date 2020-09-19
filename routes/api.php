@@ -21,29 +21,29 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/dht','DhtLogController@index');
 Route::get('/dht/{dateCreate}','DhtLogController@show');
 Route::get('/dhtchart/{dateCreate}','DhtLogController@ChartVal');
-Route::get('/currentdht','DhtLogController@CurrenDhttVal');
+Route::get('/currentdht','DhtLogController@CurrenDhtVal');
 Route::post('/dht','DhtLogController@store');
 
 //api ph
 Route::get('/ph','PhLogController@index');
 Route::get('/ph/{dateCreate}','PhLogController@show');
 Route::get('/phchart/{dateCreate}','PhLogController@ChartVal');
-Route::get('/currentph','PhLogController@CurrenPhtVal');
+Route::get('/currentph','PhLogController@CurrentPhVal');
 Route::post('/ph','PhLogController@store');
 
 //api soil moisture
 Route::get('/soil','SoilLogController@index');
 Route::get('/soil/{dateCreate}','SoilLogController@show');
 Route::get('/soilchart/{dateCreate}','SoilLogController@ChartVal');
-Route::get('/currentsoil','SoilLogController@CurrenSoiltVal');
+Route::get('/currentsoil','SoilLogController@CurrentSoilVal');
 Route::post('/soil','SoilLogController@store');
 
 //api daily logs
 Route::get('/daily','DailyLogController@index');
 Route::get('/maxdhtpast','DailyLogController@MaxDhtLastTime');
 Route::get('/mindhtpast','DailyLogController@MInDhtLastTime');
-Route::get('/iterationval','DailyLogController@IterationVal');
-Route::get('/criteriatval','DailyLogController@CriteriatVal');
+Route::get('/iterionval','DailyLogController@IterationVal');
+Route::get('/criteriaval','DailyLogController@CriteriaVal');
 
 //etc
 Route::get('/settingname/{name}','SettingsController@show');

@@ -28,13 +28,13 @@
                     </v-row>
                     <v-row justify="center">
                       <v-col>
-                        <v-text-field v-model="search" label="Date range" prepend-icon="mdi-calendar" readonly></v-text-field>
+                        <v-text-field v-model="search" label="Date" prepend-icon="mdi-calendar" readonly></v-text-field>
                       </v-col>
                     </v-row>
                     <v-card-actions>
                       <v-btn v-bind="attrs" v-on="on" text @click="openChart" :disabled="!disableButton">Graf</v-btn>
                       <v-btn text @click="setField">OK</v-btn>
-                      <v-btn text @click="resetField">Cencel</v-btn>
+                      <v-btn text @click="resetField">Cancel</v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-col>
@@ -98,7 +98,7 @@
       picker: new Date().toISOString().substr(0, 10),
       headers: [        
           { text: 'Tanggal', value: 'dateCreate', sortable: false },
-          { text: 'Kadar Air', value: 'soilMoisture', sortable: false },
+          { text: 'Kadar Air (%)', value: 'soilMoisture', sortable: false },
       ],
       soilSensor: [],
       series: [

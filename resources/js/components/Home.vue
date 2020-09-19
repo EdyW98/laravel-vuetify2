@@ -179,10 +179,13 @@
 </template>
 
 <script>
-export default {
+  import PesanPertama from './Pesan/Pesan1'
+  import PesanKedua from './Pesan/Pesan2'
+
+  export default {
     components:{
-        'PesanPertama': () => import('./Pesan/Pesan1'),
-        'PesanKedua': () => import('./Pesan/Pesan2'),
+      PesanPertama,
+      PesanKedua
     },
 
     props: {
@@ -236,7 +239,7 @@ export default {
         var normalisasi = [];
         var saw = 0;
 
-        let uri="/api/criteriatval";
+        let uri="/api/critariaval";
         await axios.get(uri).then(response => {
           //temperature Max val
           kriteria.push(response.data.MaxTemperature);

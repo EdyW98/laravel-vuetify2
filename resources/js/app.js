@@ -28,7 +28,7 @@ const app = new Vue({
             iconfont: 'mdi'
         }
     }),
-    router,
+    router: router,
     components: {
         AppRoot
     }

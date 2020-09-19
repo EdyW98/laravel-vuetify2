@@ -69,7 +69,7 @@ class DhtLogController extends Controller
         return response()->json($dht,200);
     }
 
-    public function CurrenDhttVal()
+    public function CurrenDhtVal()
     {
         //getting max humidity for today
         $dht = DB::table("dht_logs")

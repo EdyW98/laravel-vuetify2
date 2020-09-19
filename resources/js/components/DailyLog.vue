@@ -60,12 +60,17 @@
 </template>
 
 <script>
+  import TemperatureMenu from './DailyLogMenu/Temperature'
+  import HumidityMenu from './DailyLogMenu/Humidity'
+  import PhMenu from './DailyLogMenu/Ph'
+  import SoilMenu from './DailyLogMenu/Soil'
+
    export default {
     components:{
-      'TemperatureMenu': () => import('./DailyLogMenu/Temperature'),
-      'HumidityMenu': () => import('./DailyLogMenu/Humidity'),
-      'PhMenu': () => import('./DailyLogMenu/Ph'),
-      'SoilMenu': () => import('./DailyLogMenu/Soil'),
+      TemperatureMenu,
+      HumidityMenu,
+      PhMenu,
+      SoilMenu,
     },
 
     props: {

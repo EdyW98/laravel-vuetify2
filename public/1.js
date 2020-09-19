@@ -1,1 +1,207 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[1],{43:function(t,a,e){"use strict";e.r(a);var i={props:{source:String},data:function(){return{page:1,pageCount:0,search:"",date:(new Date).toISOString().substr(0,10),menu:!1,headers:[{text:"Rata Rata",value:"AvgHumidity",sortable:!1},{text:"Tertinggi",value:"MaxHumidity",sortable:!1},{text:"Terendah",value:"MinHumidity",sortable:!1},{text:"Tanggal",value:"created_at",sortable:!1}],data:[],seriesHumidity:[{name:"Rata-Rata Kelembapan Udara",data:[]},{name:"Kelembapan Udara Tertinggi",data:[]},{name:"Kelembapan Udara Terendah",data:[]}],optionsHumidity:{chart:{id:"vuechart-example",toolbar:{show:!1},zoom:{enabled:!1}},title:{text:"Graf Kelembapan Udara",align:"Center"},xaxis:{categories:[]}}}},methods:{getDataHumidity:function(){var t=this;axios.get("/api/daily/").then((function(a){console.log(a.data),t.data=a.data}))},getDataChartHumidity:function(){var t=this,a=[],e=[],i=[],n=[];axios.get("/api/daily/").then((function(s){console.log(s.data),s.data.forEach((function(t){a.push(t.AvgHumidity)})),s.data.forEach((function(t){e.push(t.MaxHumidity)})),s.data.forEach((function(t){i.push(t.MinHumidity)})),t.seriesHumidity=[{data:a},{data:e},{data:i}],t.optionsHumidity={xaxis:{categories:n}}}))},setSearchTable:function(){this.search=this.date,this.menu=!1},resetSearchTable:function(){this.search="",this.menu=!1}},created:function(){this.getDataHumidity(),this.getDataChartHumidity()}},n=e(0),s=Object(n.a)(i,(function(){var t=this,a=t.$createElement,e=t._self._c||a;return e("v-app",{attrs:{id:"inspire"}},[e("v-container",{attrs:{fluid:""}},[e("v-row",{staticClass:"mx-0",attrs:{align:"start",justify:"center"}},[e("v-col",{staticClass:"text-center"},[e("v-card",{staticClass:"px-2 mx-auto",attrs:{width:"fill","max-height":"750","min-height":"500",outlined:""}},[e("v-card-title",[t._v("Graf Temperatur")]),t._v(" "),e("apexchart",{attrs:{height:"100%",type:"line",options:t.optionsHumidity,series:t.seriesHumidity}})],1)],1)],1),t._v(" "),e("v-spacer"),t._v(" "),e("v-row",{attrs:{align:"start",justify:"center"}},[e("v-col",{staticClass:"text-center"},[e("v-menu",{ref:"menu",attrs:{"close-on-content-click":!1,transition:"scale-transition","offset-y":"","min-width":"290px"},scopedSlots:t._u([{key:"activator",fn:function(a){var i=a.on,n=a.attrs;return[e("v-text-field",t._g(t._b({attrs:{label:"Cari","prepend-icon":"mdi-calendar",readonly:""},model:{value:t.search,callback:function(a){t.search=a},expression:"search"}},"v-text-field",n,!1),i))]}}]),model:{value:t.menu,callback:function(a){t.menu=a},expression:"menu"}},[t._v(" "),e("v-date-picker",{attrs:{"no-title":"",scrollable:""},model:{value:t.date,callback:function(a){t.date=a},expression:"date"}},[e("v-spacer"),t._v(" "),e("v-btn",{attrs:{text:"",color:"primary"},on:{click:t.resetSearchTable}},[t._v("Reset")]),t._v(" "),e("v-btn",{attrs:{text:"",color:"primary"},on:{click:t.setSearchTable}},[t._v("Set")])],1)],1),t._v(" "),e("v-card",{staticClass:"px-auto mx-auto",attrs:{width:"fill",outlined:""}},[e("v-card-title",[t._v("Tabel Temperature")]),t._v(" "),e("v-data-table",{staticClass:"elevation-1",attrs:{headers:t.headers,items:t.data,page:t.page,"items-per-page":15,search:t.search,"hide-default-footer":""},on:{"update:page":function(a){t.page=a},"page-count":function(a){t.pageCount=a}}}),t._v(" "),e("div",{staticClass:"text-center pt-2"},[e("v-pagination",{attrs:{length:t.pageCount,"total-visible":7},model:{value:t.page,callback:function(a){t.page=a},expression:"page"}})],1)],1)],1)],1)],1)],1)}),[],!1,null,null,null);a.default=s.exports}}]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[1],{
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Pesan/Pesan2.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Pesan/Pesan2.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    source: String
+  },
+  data: function data() {
+    return {
+      // dateOpsi: { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' },
+      // timeOpsi: { hour: '2-digit', minute: '2-digit' },
+      date: null,
+      time: null,
+      maxtempt: null,
+      AvgTemperature: null,
+      AvgPh: null,
+      AvgSoil: null,
+      Data: []
+    };
+  },
+  methods: {
+    getAvgData: function getAvgData() {
+      var _this = this;
+
+      var uri = "/api/iterationval";
+      axios.get(uri).then(function (response) {
+        _this.AvgTemperature = response.data.AvgTemperature;
+        _this.AvgPh = response.data.AvgPh;
+        _this.AvgSoil = response.data.AvgSoil; // this.date = new Date(response.data.created_at).toLocaleTimeString('id',dateOpsi);
+      });
+    },
+    getDhtVal: function getDhtVal() {
+      var _this2 = this;
+
+      var dateOpsi = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      };
+      var timeOpsi = {
+        hour: '2-digit',
+        minute: '2-digit'
+      };
+      var uri = "/api/maxdhtpast";
+      axios.get(uri).then(function (response) {
+        _this2.maxtempt = response.data.temperature;
+        _this2.time = new Date(response.data.dateCreate).toLocaleTimeString('id', timeOpsi);
+        _this2.date = new Date(response.data.dateCreate).toLocaleDateString('id', dateOpsi);
+        console.log(_this2.date);
+        console.log(_this2.time);
+      });
+    }
+  },
+  created: function created() {
+    this.getAvgData();
+    this.getDhtVal();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Pesan/Pesan2.vue?vue&type=template&id=52bac716&":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Pesan/Pesan2.vue?vue&type=template&id=52bac716& ***!
+  \***************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticStyle: { "font-size": "16px" } }, [
+    _c("p", [
+      _vm._v(
+        "berdasarkan pemantauan data pada " +
+          _vm._s(_vm.date) +
+          ".\n        Hari anda dapat melakukan pengaliran air ke tanaman sekitar jam " +
+          _vm._s(_vm.time)
+      ),
+      _c("br"),
+      _vm._v("\n        berikut ini rekap singkatnya:\n    ")
+    ]),
+    _vm._v(" "),
+    _c("p", [
+      _vm._v(
+        "Temperature Tertinggi: " +
+          _vm._s(_vm.maxtempt) +
+          " Pada Jam : " +
+          _vm._s(_vm.time)
+      )
+    ]),
+    _vm._v(" "),
+    _c("p", [
+      _vm._v("Rata-rata Temperature: " + _vm._s(_vm.AvgTemperature) + " C")
+    ]),
+    _vm._v(" "),
+    _c("p", [
+      _vm._v("Rata-Rata Kadar Air Media Tanam: " + _vm._s(_vm.AvgSoil) + "%")
+    ]),
+    _vm._v(" "),
+    _c("p", [_vm._v("Rata-Rata Ph Air: " + _vm._s(_vm.AvgPh))])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Pesan/Pesan2.vue":
+/*!**************************************************!*\
+  !*** ./resources/js/components/Pesan/Pesan2.vue ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Pesan2_vue_vue_type_template_id_52bac716___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Pesan2.vue?vue&type=template&id=52bac716& */ "./resources/js/components/Pesan/Pesan2.vue?vue&type=template&id=52bac716&");
+/* harmony import */ var _Pesan2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Pesan2.vue?vue&type=script&lang=js& */ "./resources/js/components/Pesan/Pesan2.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Pesan2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Pesan2_vue_vue_type_template_id_52bac716___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Pesan2_vue_vue_type_template_id_52bac716___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Pesan/Pesan2.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Pesan/Pesan2.vue?vue&type=script&lang=js&":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/Pesan/Pesan2.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Pesan2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Pesan2.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Pesan/Pesan2.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Pesan2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Pesan/Pesan2.vue?vue&type=template&id=52bac716&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/Pesan/Pesan2.vue?vue&type=template&id=52bac716& ***!
+  \*********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Pesan2_vue_vue_type_template_id_52bac716___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Pesan2.vue?vue&type=template&id=52bac716& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Pesan/Pesan2.vue?vue&type=template&id=52bac716&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Pesan2_vue_vue_type_template_id_52bac716___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Pesan2_vue_vue_type_template_id_52bac716___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ })
+
+}]);
