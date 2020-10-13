@@ -1,7 +1,8 @@
 <template>
     <div style="font-size:16px">
         <p>berdasarkan pemantauan data pada {{ date }}.
-            Hari anda dapat melakukan pengaliran air ke tanaman sekitar jam {{ time }}<br>
+            Hari ini anda tidak ada hal genting yang perlu di lakukan.
+            Pengaliran air ke tanaman sangat ideal disekitar jam {{ time }}<br>
             berikut ini rekap singkatnya:
         </p>
         <p>Temperature Tertinggi: {{ maxtempt }} Pada Jam : {{ time }}</p>

@@ -1,7 +1,7 @@
 <template>
     <div style="font-size:16px">
         <p>berdasarkan pemantauan data pada {{ dateMaxVal }}.
-            Hari bukanlah hari yang tepat untuk melakukan pengaliran air dari kolam ke tanaman,<br>
+            Cek kembali pengairan air ke tanaman anda, jangan sampai media tanam tergenang air,<br>
             dikarenakan adanya tingkat intensitas air yang tinggi baik pada media tanam maupun udara<br>
             berikut ini rekap singkatnya:
         </p>
