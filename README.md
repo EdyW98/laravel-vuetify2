@@ -1,4 +1,6 @@
-# laravel-vuetify2
-Laravel and Vuetify v2
+Mini Projek Laravel&Vue + Vuetify
+Aplikasi Web pengecekan akuaponik
 
-Configurations for Vuetify v2 inside Laravel's Project 
+Setup:
+1. ketik command "php artisan install"
+2. ketik command "npm install"
